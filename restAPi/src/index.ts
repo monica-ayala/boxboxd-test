@@ -1,9 +1,10 @@
-import { AppDataSource } from "./data-source";
+import { AppDataSource, F1DataSource } from "./data-source";
 import * as express from "express";
 import * as dotenv from "dotenv";
 import { Request, Response } from "express";
 import { userRouter } from "./routes/user.routes";
 import { movieRouter } from "./routes/movie.routes";
+import { driverRouter } from "./routes/drivers.routes";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 dotenv.config();
@@ -14,16 +15,18 @@ app.use(errorHandler);
 const { PORT = 3000 } = process.env;
 app.use("/auth", userRouter);
 app.use("/api", movieRouter);
+app.use("/api", driverRouter);
+
 
 app.get("*", (req: Request, res: Response) => {
   res.status(505).json({ message: "Bad Request" });
 });
 
-AppDataSource.initialize()
-  .then(async () => {
+Promise.all([AppDataSource.initialize(), F1DataSource.initialize()])
+  .then(() => {
     app.listen(PORT, () => {
-      console.log("Server is running on http://localhost:" + PORT);
+      console.log(`Server is running on http://localhost:${PORT}`);
     });
-    console.log("Data Source has been initialized!");
+    console.log("Data Source initialized successfully");
   })
-  .catch((error) => console.log(error));
+  .catch((error) => console.log("Error during Data Source initialization:", error));
