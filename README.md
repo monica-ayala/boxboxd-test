@@ -21,6 +21,10 @@ This will go into the restAPi folder inside the boxboxd-test folder and install 
 
 Go into the restAPi directory and create a file called ".env", then paste the required environment variables provided in the discord.
 
+#### 4. Try running it!
+
+Paste this command in your cmd terminal ```npm run start```
+Then you can use services like [Postman](https://www.postman.com/) or [the VSCode extension Thunderclient](https://www.thunderclient.com/) to query the API through POST and GET requests. 
 
 ### Common errors
 *Note: here i will add common errors and how to troubleshoot them*
