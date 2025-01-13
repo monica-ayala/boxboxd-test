@@ -3,8 +3,8 @@ import * as express from "express";
 import * as dotenv from "dotenv";
 import { Request, Response } from "express";
 import { userRouter } from "./routes/user.routes";
-import { movieRouter } from "./routes/movie.routes";
-import { driverRouter } from "./routes/drivers.routes";
+import { reviewRouter } from "./routes/review.routes";
+import { prismaRouter } from "./routes/prisma.routes";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 dotenv.config();
@@ -14,9 +14,8 @@ app.use(express.json());
 app.use(errorHandler);
 const { PORT = 3000 } = process.env;
 app.use("/auth", userRouter);
-app.use("/api", movieRouter);
-app.use("/api", driverRouter);
-
+app.use("/f1db-api", prismaRouter)
+app.use("/api", reviewRouter);
 
 app.get("*", (req: Request, res: Response) => {
   res.status(505).json({ message: "Bad Request" });

@@ -9,4 +9,9 @@ Router.get("/drivers", async (req, res) => {
   res.json(drivers);
 });
 
-export { Router as driverRouter };
+Router.get("/races", async (req, res) => {
+  const races = await prisma.race.findMany();
+  res.json(races);
+});
+
+export { Router as prismaRouter };
